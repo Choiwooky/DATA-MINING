@@ -10,3 +10,5 @@ url <- "https://news.naver.com/main/read.nhn?m_view=1&includeAllCount=true&mode=
 k1 <- getComment(url, pageSize = 100, page = 1)
 k2 <- getComment(url, pageSize = 100, page = 2)
 
+k <- getAllComment(url)
+
