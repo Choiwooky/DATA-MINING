@@ -1,5 +1,5 @@
 # 크롤링에 필요한 rvest 패키지 설치
-if(!require(revest)){
+if(!require(rvest)){
   install.packages('rvest')
 }
 # 데이터 전처리에 필요한 dplyr 패키지 설치
