@@ -1,15 +1,20 @@
-# 크롤링에 필요한 rvest 패키지 설치
+# rvest : R에서의 크롤링에 필요한 패키지
 if(!require(rvest)){
   install.packages('rvest')
 }
-# 데이터 전처리에 필요한 dplyr 패키지 설치
+# dplyr : 데이터 전처리에 필요한 패키지 설치 (%>% 사용)
 if(!require(dplyr)){
   install.packages('dplyr')
 }
-
+# N2H4 : 네이버 댓글 크롤링을 위한 패키지 
+if (!requireNamespace("N2H4")){
+  source("https://install-github.me/forkonlp/N2H4")
+}
 
 library(rvest)
 library(dplyr)
+library(N2H4)
+
 #################################################################
 ### 특정섹션, 특정기간 url 생성
 
@@ -28,9 +33,10 @@ myurl <- function(section, date) {
   print(naver_url)
 }
 
+
 # 전역변수 지역변수 개념
 # function 내부에서 전역변수로 선언 : <<-
-# return 써도 좋음
+
 #################################################################
 ### 특정 기간의 전체 섹션 반복 url
 naver_url_1 <- 'https://news.naver.com/main/ranking/popularDay.nhn?rankingType=popular_day&sectionId='
@@ -50,12 +56,11 @@ for (dt in date){
 }
 
 naver_url
-#&sectionId=100&date=20190411 이런식으로 결과치
+# &sectionId=100&date=20190411 이런식으로 naver_url에 저장
 
-## if(i == length(data)*length(section)) break 하면 왜 무한루프?
 
 ################################################################
-### 위 작업을 통한 url에 대해 크롤링
+### 위 작업을 통한 url(특정 세션의 순위권 기사)에 대해 댓글 
 
 # 위 작업을 통해 얻은 url중 하나 임의로 정함
 ##pnews_url = 'https://news.naver.com/main/ranking/popularDay.nhn?rankingType=popular_day&sectionId=100&date=20190411'
@@ -80,7 +85,7 @@ temp1 <- html %>% html_nodes(css='.ranking') %>% html_nodes(css='.ranking_list')
 # html_attr() : 해당 속성 값을 추출함
 # 속성이 class인 경우 'css' 약자를 사용
 
-###############################################################
+
 ### 위 과정을 통해 구한 url에
 ### https://news.naver.com 를 앞에 붙여줘야 링크연결
 char_1 <- 'https://news.naver.com'
@@ -90,12 +95,7 @@ for(i in 1:length(temp)){
 }
 
 ranked_url
-########################################################
-if (!requireNamespace("N2H4")){
-  source("https://install-github.me/forkonlp/N2H4")
-}
-
-library(N2H4)
+# ranked_url : 랭킹별 url 완성
 
 
 raw.data <- list()
@@ -106,7 +106,8 @@ for(i in 1:10){
   k.con <- k %>% select(contents, sympathyCount)
   raw.data[[i]] <- k.con %>% arrange(desc(sympathyCount))
 }
-View(raw.data)
+# raw.data : 1위부터 10위까지의 댓글을 모두 넣어줌
+
 ################################################################
 ### 연령별 (날짜별 데이터는 없다) 10 ~ 60
 
@@ -125,8 +126,7 @@ for(i in 1:length(temp0)){
 }
 
 aged_url
-
-library(N2H4)
+# aged_url : 나이별 url   
 
 raw.data_age <- list()
 
@@ -136,21 +136,19 @@ for(i in 1:10){
   k.con <- k %>% select(contents, sympathyCount)
   raw.data_age[[i]] <- k.con %>% arrange(desc(sympathyCount))
 }
-View(raw.data_age)
-View(raw.data_age[[1]])
+# raw.data_age : 연령별 1위부터 10위의 댓글 원 데이터 추출
+
 ################################################################
 ### csv 파일 작성
 total <- NULL
 i <- 1
-while(1) {
+for(i in 1:10){
   total <- bind_rows(total,raw.data[[i]][1:100,])
-  i = i + 1
-  if(i>10) break 
 }
-# raw.data의 갯수가 너무 많아 각각 기사의 댓글 중 100개 추출
-# 이후 total에 열 기준 합침 
+# total : raw.data의 갯수가 너무 많아 각각 기사의 댓글 중 100개 추출
+#         이후 total에 열 기준 합침 
 
-setwd("C:/Users/whddnr/Desktop/rawdata")
+# setwd("C:/Users/whddnr/Desktop/rawdata")
 write.csv(total, file = "sample.csv", row.names = TRUE)
 
 
