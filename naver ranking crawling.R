@@ -111,7 +111,6 @@ View(raw.data)
 ### 연령별 (날짜별 데이터는 없다) 10 ~ 60
 
 myurl_age <- function(age){
-  age <- readline(prompt = "연령대: ")
   url_age <<- paste0("https://news.naver.com/main/ranking/popularDay.nhn?rankingType=age&subType=",age)
 }
 
