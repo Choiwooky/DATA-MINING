@@ -141,7 +141,6 @@ for(i in 1:10){
 ################################################################
 ### csv 파일 작성
 total <- NULL
-i <- 1
 for(i in 1:10){
   total <- bind_rows(total,raw.data[[i]][1:100,])
 }
@@ -153,3 +152,4 @@ write.csv(total, file = "sample.csv", row.names = TRUE)
 
 
 ## 크롤링 도움  https://kuduz.tistory.com/104
+## 출처 : https://github.com/forkonlp/N2H4
