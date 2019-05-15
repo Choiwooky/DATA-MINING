@@ -147,8 +147,11 @@ for(i in 1:10){
 # total : raw.data의 갯수가 너무 많아 각각 기사의 댓글 중 100개 추출
 #         이후 total에 열 기준 합침 
 
+sample <- total %>% filter(!is.na(contents))
+# sample : 기사의 댓글 수 가 100개가 안될경우 결측치 처리가 되기 때문에 결측치를 제거해 준다. 
+
 # setwd("C:/Users/whddnr/Desktop/rawdata")
-write.csv(total, file = "sample.csv", row.names = TRUE)
+write.csv(sample, file = "sample.csv", row.names = TRUE)
 
 
 ## 크롤링 도움  https://kuduz.tistory.com/104
