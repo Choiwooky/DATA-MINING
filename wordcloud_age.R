@@ -26,7 +26,20 @@ library(stringr)
 library(rvest)
 library(dplyr)
 library(KoNLP)
-# rJAVA 설치 필요
+
+## KoNLP 패키지가 실행이 안되는 경우
+# rJava가 설치되지 않아 발생하는 문제이다.
+# 해결방법
+# 1. 일단 다음 링크에서 운영체제에 맞는 버전의 Java를 설치한다.
+# https://www.java.com/en/download/manual.jsp
+# 2. 설치완료 후, R로 돌아가서 rJava package를 설치한다.
+# install.packages("rJava")
+# 3. KoNLP 패키지를 실행해서 작동하는지 확인한다.
+
+## 여전히 KoNLP 패키지가 실행이 안되는 경우
+# JAVA_HOME의 경로를 알 수 없어서 나는 오류이다.
+# JAVA가 설치되어 있는 경로를 컴퓨터에서 확인하고 R에 작성해주면 해결된다.
+# Sys.setenv(JAVA_HOME="C:/Program Files/Java/jre1.8.0_211")
 
 myurl_age <- function(age){
   age <- readline(prompt = "연령대: ")
