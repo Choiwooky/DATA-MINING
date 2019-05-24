@@ -78,7 +78,7 @@ mergeUserDic(data.frame('이명박','nqpc'))
 buildDictionary(ext_dic = c("sejong","woorimalsam"), user_dic = data.frame("이명박", "nqpc"), replace_usr_dic = T)
 ### 해결과제 : 대선주자 이름 dictionary에 추가
 
-## 기존 작성내용
+### 기존 작성내용
 sentence <- unlist(temp)
 word_1 <- sapply(sentence, extractNoun, USE.NAMES = F)
 word_2 <- unlist(word_1)
@@ -86,11 +86,11 @@ wordcount_2 <- table(word_2)
 head(sort(wordcount_2,decreasing = T),20)
 word_3 <-str_replace_all(word_2,'[전사수의나원위것0-9.]','')
 
-### 해결과제 : 한자는 의미있는 단어이니 꼭 보존해야함
-###            하지만 대부분의 의미있는 명사는 2글자 이상임
+## 해결과제 : 한자는 의미있는 단어이니 꼭 보존해야함
+##            하지만 대부분의 의미있는 명사는 2글자 이상임
 # Filter(function(x){nchar(x)>=2}, word_2) 코드활용
   
-## 위 해결과제에 대한 코드
+### 위 해결과제에 대한 코드
 sentence <- unlist(temp)
 word_1 <- sapply(sentence, extractNoun, USE.NAMES = F)
 word_2 <- unlist(word_1)
@@ -104,7 +104,7 @@ word_3 <- Filter(function(x){!(nchar(x)<2 & is.hangul(x))}, word_3)
 word_3 <- word_3[ifelse(word_3 %in% as.character(0:9), F, T)]
 word_3 # 필터링 거친 데이터 확인
 
-### 남은 해결과제
+## 남은 해결과제
 # '이명' -> '이명박' 등으로 바꾸는 작업 필요!!!
 # 추가로, 특수문자만 있는 리스트가 있는지 찾아볼 것!!
 
