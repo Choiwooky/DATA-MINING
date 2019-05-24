@@ -49,6 +49,9 @@ fdate <- function(year) {
 }
 # mydate : yyyymmdd 형태로 365일 저장
 
+# 주의!!!
+# 네이버 기사 크롤링은 2004년 4월 20일부터 가능함!!
+
 #############################################################################
 ### 한 해 동안의 기사 제목에서 명사 추출 
 # 정치섹션 많이본 기사 30위까지의 title 추출
@@ -77,18 +80,18 @@ for (i in 1:length(naver_url)){
 # mergeUserDic(data.frame('이명박','nqpc'))
 # buildDictionary(ext_dic = c("sejong","woorimalsam"), user_dic = data.frame("이명박", "nqpc"), replace_usr_dic = T)
 ### 해결과제 : 대선주자 이름 dictionary에 추가?
-### -> 다른 방법을 사용하여 처리 -> 그런 이유로 이 부분은 주석으로 처리함.
+#   -> 다른 방법을 사용하여 처리 -> 그런 이유로 이 부분은 주석으로 처리함.
 
 ### 기존 작성내용
-sentence <- unlist(temp)
-word_1 <- sapply(sentence, extractNoun, USE.NAMES = F)
-word_2 <- unlist(word_1)
-wordcount_2 <- table(word_2)
-head(sort(wordcount_2,decreasing = T),20)
-word_3 <-str_replace_all(word_2,'[전사수의나원위것0-9.]','')
+# sentence <- unlist(temp)
+# word_1 <- sapply(sentence, extractNoun, USE.NAMES = F)
+# word_2 <- unlist(word_1)
+# wordcount_2 <- table(word_2)
+# head(sort(wordcount_2,decreasing = T),20)
+# word_3 <-str_replace_all(word_2,'[전사수의나원위것0-9.]','')
 
 ## 해결과제 : 한자는 의미있는 단어이니 꼭 보존해야함
-##            하지만 대부분의 의미있는 명사는 2글자 이상임
+#            하지만 대부분의 의미있는 명사는 2글자 이상임
 # Filter(function(x){nchar(x)>=2}, word_2) 코드활용
   
 ### 위 해결과제에 대한 코드
@@ -105,9 +108,14 @@ word_3 <- Filter(function(x){!(nchar(x)<2 & is.hangul(x))}, word_3)
 word_3 <- word_3[ifelse(word_3 %in% as.character(0:9), F, T)]
 word_3 # 필터링 거친 데이터 확인
 
+# 필터링 거친 데이터 word_3를 가장 많이 나온 순으로 50개만 확인
+w <- table(word_3)
+head(sort(w, decreasing = T), 50)
+
 ## 남은 해결과제
-# '이명' -> '이명박' 등으로 바꾸는 작업 필요!!!
-# 추가로, 특수문자만 있는 리스트가 있는지 찾아볼 것!!
+# 1. '이명' -> '이명박' 등으로 바꾸는 작업 필요!
+# 2. 특수문자는 거의 웬만한 건 다 저게되었으나, 아직 극히 일부 특수문자가 남아있음.
+#    그래서 특수문자만 있는 리스트가 있는지 찾아볼 것!
 
 wordcount_3 <- table(word_3)
 head(sort(wordcount_2, decreasing = T),50)
