@@ -74,9 +74,10 @@ for (i in 1:length(naver_url)){
   temp[[i]] <- html %>% html_nodes(css='.ranking') %>% html_nodes(css='.ranking_list') %>% html_nodes(css='.ranking_text') %>% html_nodes(css='.ranking_headline') %>% html_nodes('a') %>% html_attr('title')
 }
 # temp : 추출한 타이틀 리스트에 저장
-mergeUserDic(data.frame('이명박','nqpc'))
-buildDictionary(ext_dic = c("sejong","woorimalsam"), user_dic = data.frame("이명박", "nqpc"), replace_usr_dic = T)
-### 해결과제 : 대선주자 이름 dictionary에 추가
+# mergeUserDic(data.frame('이명박','nqpc'))
+# buildDictionary(ext_dic = c("sejong","woorimalsam"), user_dic = data.frame("이명박", "nqpc"), replace_usr_dic = T)
+### 해결과제 : 대선주자 이름 dictionary에 추가?
+### -> 다른 방법을 사용하여 처리 -> 그런 이유로 이 부분은 주석으로 처리함.
 
 ### 기존 작성내용
 sentence <- unlist(temp)
