@@ -122,3 +122,16 @@ head(sort(wordcount_2, decreasing = T),50)
 View(sort(wordcount_3, decreasing = T))
 
 #############################################################################
+# day에 날짜를 입력하면 그 사잇값들을 계산해주면 
+fday <- function(day) {
+  day <- c(0, day)
+  day <- cumsum(day)
+  day.f <- NULL
+  for(i in 1:(length(day)-1)) {
+    day.f <- c(day.f, median(c(day[i], day[i+1])))
+  }
+  return(day.f)
+}
+
+x <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+fday(x)
