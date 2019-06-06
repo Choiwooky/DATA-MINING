@@ -200,7 +200,7 @@ w <- table(word_3)
 head(sort(w, decreasing = T), 50)
 
 # 이명박
-m <- which(word_2 == '李' | word_2 == '이명박' | word_2 == '이명' | word_2 = '명박' )
+m <- which(word_2 == '李' | word_2 == '이명박' | word_2 == '이명' | word_2 == '명박' )
 plot(m)
 boxplot(m)
 hist(m,xlim = c(1, length(word_2)))
