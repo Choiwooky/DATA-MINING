@@ -1,25 +1,28 @@
 ## 17, 18대 대선 날짜 출력 함수
 fdate1718 <- function(year) {
-  mydate <<- NULL
+  fdate <- NULL
+  mydate <<- list()
   day <- 1:31
   for(i in 1:length(month.abb)) {
     if(i %in% c(1, 3, 5, 7, 8)) {
-      mydate <<- c(mydate, as.numeric(paste0(year, 0, i, 0, day[1:9])), as.numeric(paste0(year, 0, i, day[10:31])))
+      fdate <- c(fdate, as.numeric(paste0(year, 0, i, 0, day[1:9])), as.numeric(paste0(year, 0, i, day[10:31])))
     } else if(i == 10) {
-      mydate <<- c(mydate, as.numeric(paste0(year, i, 0, day[1:9])), as.numeric(paste0(year, i, day[10:31])))
+      fdate <- c(fdate, as.numeric(paste0(year, i, 0, day[1:9])), as.numeric(paste0(year, i, day[10:31])))
     } else if(i %in% c(4, 6, 9)) {
-      mydate <<- c(mydate, as.numeric(paste0(year, 0, i, 0, day[1:9])), as.numeric(paste0(year, 0, i, day[10:30])))
+      fdate <- c(fdate, as.numeric(paste0(year, 0, i, 0, day[1:9])), as.numeric(paste0(year, 0, i, day[10:30])))
     } else if(i == 11) {
-      mydate <<- c(mydate, as.numeric(paste0(year, i, 0, day[1:9])), as.numeric(paste0(year, i, day[10:30])))
+      fdate <- c(fdate, as.numeric(paste0(year, i, 0, day[1:9])), as.numeric(paste0(year, i, day[10:30])))
     } else if(i == 2) {
-      mydate <<- c(mydate, as.numeric(paste0(year, 0, i, 0, day[1:9])), as.numeric(paste0(year, 0, i, day[10:28])))
+      fdate <- c(fdate, as.numeric(paste0(year, 0, i, 0, day[1:9])), as.numeric(paste0(year, 0, i, day[10:28])))
     } else {
-      mydate <<- c(mydate, as.numeric(paste0(year, i, 0, day[1:9])), as.numeric(paste0(year, i, day[10:18])))
+      fdate <- c(fdate, as.numeric(paste0(year, i, 0, day[1:9])), as.numeric(paste0(year, i, day[10:18])))
     }
+    mydate[[i]] <<- subset(fdate, as.numeric(substr(fdate, 5, 6)) == i)
   }
+  names(mydate) <<- month.abb
 }
 
-# 변수 mydate에 날짜를 저장하고 전역변수로 만들었음.
+# 변수 mydate에 날짜를 저장하고 전역변수로 만들었음. list 형태임.
 # 날짜 사용은 함수를 실행하고 mydate를 호출하면 됨.
 
 ## 결과
